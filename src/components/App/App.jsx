@@ -8,6 +8,7 @@ import {
   CryptoHistory,
 } from 'components';
 import article from 'data/article.json';
+import data from 'data/data.json';
 
 export const App = () => {
   return (
@@ -25,11 +26,11 @@ export const App = () => {
           avatar={article.avatar}
           postedAt={article.postedAt}
         />
-
         <Heading marginTop="50px" marginBottom="50px" textAlign="center">
           Task 2
         </Heading>
-        <Statistics />
+        {/* <Statistics title="Main Statistics" stats={data} /> */}
+        <Statistics stats={data} />
         <Heading marginTop="50px" marginBottom="50px" textAlign="center">
           Task 3
         </Heading>
