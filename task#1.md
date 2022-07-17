@@ -5,7 +5,7 @@
 
 [![Превью](https://i.gyazo.com/76384ee7d41664406ee52acb77351f07.jpg)](https://gyazo.com/76384ee7d41664406ee52acb77351f07)
 
-Створи компоненти `<SearchForm>`, `<ImageCard>`, `<Button>` і `<Modal>`. Для
+Створи компоненти `<SearchForm>`, `<ImageCard>`, `<Button>`. Для
 створення сітки використовуй styled-components `<Grid>` та `<GridItem>`
 
 > Тут самі файли [Grid](./src/components/Grid/Grid.styled.jsx)
