@@ -29,7 +29,9 @@ export const Header = () => {
         </Container>
       </NavBar>
 
-      <Outlet />
+      <main>
+        <Outlet />
+      </main>
     </>
   );
 };
