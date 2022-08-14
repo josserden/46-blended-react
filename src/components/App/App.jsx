@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import { nanoid } from 'nanoid';
 
 import {
@@ -11,78 +11,54 @@ import {
   Text,
   Todo,
 } from 'components';
+import { useLocalStorage } from 'hooks';
 
-export class App extends Component {
-  state = {
-    todos: [],
-  };
+export const App = () => {
+  const [todos, setTodos] = useLocalStorage('todos', []);
 
-  componentDidMount() {
-    const todos = JSON.parse(localStorage.getItem('todos'));
-
-    if (todos) {
-      this.setState(() => ({ todos }));
-    }
-  }
-  componentDidUpdate(prevProps, prevState) {
-    const { todos } = this.state;
-
-    if (prevState.todos !== todos) {
-      localStorage.setItem('todos', JSON.stringify(todos));
-    }
-  }
-
-  addTodo = text => {
+  const addTodo = text => {
     const todo = {
       id: nanoid(),
       text,
     };
 
-    this.setState(({ todos }) => ({
-      todos: [...todos, todo],
-    }));
+    setTodos([...todos, todo]);
   };
 
-  handleSubmit = data => {
-    this.addTodo(data);
+  const handleSubmit = data => {
+    addTodo(data);
   };
 
-  deleteTodo = id => {
-    this.setState(prevState => ({
-      todos: prevState.todos.filter(todo => todo.id !== id),
-    }));
+  const deleteTodo = id => {
+    setTodos(todos.filter(todo => todo.id !== id));
   };
 
-  render() {
-    const { todos } = this.state;
+  return (
+    <>
+      <Header />
+      <Section>
+        <Container>
+          <SearchForm onSubmit={handleSubmit} />
 
-    return (
-      <>
-        <Header />
-        <Section>
-          <Container>
-            <SearchForm onSubmit={this.handleSubmit} />
+          {todos.length === 0 && (
+            <Text textAlign="center">There are no any todos ... </Text>
+          )}
 
-            {todos.length === 0 && (
-              <Text textAlign="center">There are no any todos ... </Text>
-            )}
-
-            <Grid>
-              {todos.length > 0 &&
-                todos.map((todo, index) => (
-                  <GridItem key={todo.id}>
-                    <Todo
-                      id={todo.id}
-                      text={todo.text}
-                      counter={index + 1}
-                      onClick={this.deleteTodo}
-                    />
-                  </GridItem>
-                ))}
-            </Grid>
-          </Container>
-        </Section>
-      </>
-    );
-  }
-}
+          <Grid>
+            {todos.length > 0 &&
+              todos.map((todo, index) => (
+                <GridItem key={todo.id}>
+                  <Todo
+                    id={todo.id}
+                    text={todo.text}
+                    counter={index + 1}
+                    onClick={deleteTodo}
+                  />
+                </GridItem>
+              ))}
+          </Grid>
+        </Container>
+      </Section>
+    </>
+  );
+};
